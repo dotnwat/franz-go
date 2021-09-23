@@ -15,6 +15,8 @@ import (
 	"time"
 
 	"github.com/twmb/franz-go/plugin/kprom"
+       "github.com/google/uuid"
+
 
 	"github.com/twmb/franz-go/pkg/kgo"
 	"github.com/twmb/franz-go/pkg/sasl/aws"
@@ -244,6 +246,8 @@ func newRecord(num int64) *kgo.Record {
 	} else {
 		r = kgo.SliceRecord(make([]byte, *recordBytes))
 	}
+    id := uuid.New()
+    r.Key = []byte(id.String())
 	formatValue(num, r.Value)
 	return r
 }
